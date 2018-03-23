@@ -6,6 +6,15 @@ import java.time.Duration
 
 import name.nocompany.noproject.util.{Formattable, LogParseFailure}
 
+/**
+  * LogContainer is immutable structure that is used
+  * to aggregate information about user access entries
+  *   see +(e:LogEntry) method to get a new one with entry e.
+  *   see complete() method to get clean copy without singular entries
+  * @param impl   - actual container for the entries
+  * @param window - time window for series extraction
+  */
+
 case class LogContainer(impl:Map[InetAddress, List[LogSeries]] = Map())(implicit window:Duration) {
 
   private class CompleteLogContainer(res:Map[InetAddress, List[LogSeries]]) extends Formattable {

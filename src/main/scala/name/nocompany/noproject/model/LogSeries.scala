@@ -6,6 +6,11 @@ import java.time.Instant
 
 import name.nocompany.noproject.util.Formattable
 
+/**
+  * LogSeries is immutable structure for sequential access storage
+  * @param addr    - source ip address
+  * @param entries - log entry sequence
+  */
 case class LogSeries(addr:InetAddress, entries:List[LogEntry]) extends Formattable {
 
   def + (entry:LogEntry):LogSeries = {

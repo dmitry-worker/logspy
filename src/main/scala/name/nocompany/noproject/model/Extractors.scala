@@ -6,14 +6,16 @@ import java.time.format.DateTimeFormatter
 
 import scala.util.Try
 
+/**
+  * This is a helper trait for reading quoted csv values
+  * With csv primitive extractors below.
+  */
 sealed trait Extractors {
-
   def unbox(src:String) = {
     if (src.isEmpty) src
     else if (src.head == '\"' && src.last == '\"') src.substring(1, src.length - 1)
     else src
   }
-
 }
 
 
@@ -43,6 +45,5 @@ object Moment extends Extractors {
     }
     instant.toOption
   }
-
 }
 
