@@ -4,7 +4,7 @@ import java.io.{File, PrintWriter}
 import java.time.Duration
 
 import name.nocompany.noproject.model.{LogContainer, LogEntry}
-
+import scala.util.control.Exception.ultimately
 import scala.util.Try
 
 object Application extends App {
@@ -22,14 +22,8 @@ object Application extends App {
   val container = (empty /: source) (_ + _)
   val result = container.complete
 
-  var p:Option[PrintWriter] = None
-  val target = Try {
-    val f = new File(args(1))
-    val w = new PrintWriter(f)
-    p = Some(w)
-    result.format(w)
-  }
-  p.foreach(_.close)
+  val w = new PrintWriter(new File(args(1)))
+  ultimately(w.close) {result.format(w)}
 
 }
 
