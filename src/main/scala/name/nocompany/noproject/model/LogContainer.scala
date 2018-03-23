@@ -48,7 +48,7 @@ case class LogContainer(impl:Map[InetAddress, List[LogSeries]] = Map())(implicit
 
   def complete:Formattable = {
     val compact = impl.foldLeft(Map[InetAddress, List[LogSeries]]()) { case (res, (addr, lseries)) =>
-      val newSeries = lseries.filter(_.entries.size > 1)
+      val newSeries = lseries.filter(_.entries.tail.nonEmpty)
       if (newSeries.isEmpty) res else res + (addr -> newSeries)
     }
     new CompleteLogContainer(compact)
